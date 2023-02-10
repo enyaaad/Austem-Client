@@ -12,6 +12,10 @@ import { ConstructorComponent } from './pages/constructor/constructor.component'
 import { SaveASComponent } from './pages/save-as/save-as.component';
 import { StoragePageComponent } from './pages/storage-page/storage-page.component';
 
+import {MatButtonModule} from "@angular/material/button";
+import {MatInputModule} from "@angular/material/input";
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +30,9 @@ import { StoragePageComponent } from './pages/storage-page/storage-page.componen
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
