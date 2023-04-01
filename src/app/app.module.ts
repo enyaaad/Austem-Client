@@ -11,10 +11,19 @@ import { MainPageComponent } from './pages/main-page/main-page.component';
 import { ConstructorComponent } from './pages/constructor/constructor.component';
 import { SaveASComponent } from './pages/save-as/save-as.component';
 import { StoragePageComponent } from './pages/storage-page/storage-page.component';
-
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
+import {RouterModule, Routes} from "@angular/router";
+import {KonvaModule} from "ng2-konva";
+import { CountfloorsComponent } from './pages/countfloors/countfloors.component';
 
+const appRoutes: Routes = [
+  {path: 'constructor', component: ConstructorComponent},
+  {path: 'saveas', component: SaveASComponent},
+  {path: 'storagepage', component: StoragePageComponent},
+  {path: 'countfloors', component: CountfloorsComponent},
+  {path: '**', component: MainPageComponent}
+];
 
 @NgModule({
   declarations: [
@@ -25,14 +34,17 @@ import {MatInputModule} from "@angular/material/input";
     MainPageComponent,
     ConstructorComponent,
     SaveASComponent,
-    StoragePageComponent
+    StoragePageComponent,
+    CountfloorsComponent
   ],
   imports: [
+    RouterModule.forRoot(appRoutes),
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+    KonvaModule
   ],
   providers: [],
   bootstrap: [AppComponent]

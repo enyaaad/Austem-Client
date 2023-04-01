@@ -1,1 +1,11 @@
-<p>constructor works!</p>
+<app-header></app-header>
+<div class="content">
+  <h3>elements</h3>
+  <ko-stage #stage [config]="configStage">
+    <ko-layer #layer>
+      <ko-circle [config]="configCircle"></ko-circle>
+    </ko-layer>
+    <ko-layer #dragLayer></ko-layer>
+  </ko-stage>
+</div>
+<app-footer></app-footer>
