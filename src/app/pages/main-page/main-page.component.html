@@ -1,19 +1,19 @@
-<app-header></app-header>
+<div class="page">
+  <div class="content" role="main">
+    <form class="example-form">
+      <mat-form-field>
+        <mat-label>Login</mat-label>
+        <input type="text" matInput placeholder="User123">
+      </mat-form-field>
 
-<div class="content" role="main">
-  <form class="example-form">
-    <mat-form-field>
-      <mat-label>Login</mat-label>
-      <input type="text" matInput placeholder="User123">
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input type="text" matInput placeholder="" >
+      </mat-form-field>
+    </form>
 
-    <mat-form-field>
-      <mat-label>Password</mat-label>
-      <input type="text" matInput placeholder="" >
-    </mat-form-field>
-  </form>
+    <app-button routerLink="/countfloors" routerLinkActive="active"></app-button>
 
-  <app-button routerLink="/countfloors" routerLinkActive="active"></app-button>
-
+  </div>
+  <app-footer></app-footer>
 </div>
-<app-footer></app-footer>

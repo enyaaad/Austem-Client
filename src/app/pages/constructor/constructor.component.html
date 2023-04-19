@@ -1,11 +1,13 @@
-<app-header></app-header>
-<div class="content">
-  <h3>elements</h3>
-  <ko-stage #stage [config]="configStage">
-    <ko-layer #layer>
-      <ko-circle [config]="configCircle"></ko-circle>
-    </ko-layer>
-    <ko-layer #dragLayer></ko-layer>
-  </ko-stage>
+<div class="constructorPage">
+  <div class="content">
+    <h3>elements</h3>
+
+    <canvas
+      #canvas
+      width="{{canvasWidth}}"
+      height="{{canvasHeight}}"
+      (mousedown)="handleMouseDown($event)"
+      (mousemove)="handleMouseMove($event)"
+      (mouseup)="handleMouseUp($event)">
+    </canvas>
 </div>
-<app-footer></app-footer>
