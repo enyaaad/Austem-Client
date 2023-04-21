@@ -1,12 +1,35 @@
-<app-header></app-header>
-<div class="content">
-  <div class="nomen">
-    <h1>nomen</h1>
+<div class="storagePage">
+  <div class="content">
+    <div class="storage">
+      <div class="headers">
+        <div class="storage-left">
+          Product Name
+        </div>
+        <div class="storage-mid">
+          Product Amount
+        </div>
+        <div class="storage-right">
+          Product Cost
+        </div>
+      </div>
+      <div *ngFor="let product of data" class="storageElement">
+        <div class="storageElement-left">
+          {{product.name}}
+        </div>
+        <div class="storageElement-mid">
+          {{product.amount}}
+        </div>
+        <div class="storageElement-right">
+          {{product.cost}}
+        </div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button class="additem button">add</button>
+      <button class="removeitem button">remove</button>
+      <button class="edititem button">edit</button>
+    </div>
   </div>
-  <div class="buttons">
-    <button class="additem button">add</button>
-    <button class="removeitem button">remove</button>
-    <button class="edititem button">edit</button>
-  </div>
+  <app-footer></app-footer>
+
 </div>
-<app-footer></app-footer>

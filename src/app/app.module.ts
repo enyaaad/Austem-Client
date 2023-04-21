@@ -15,6 +15,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import {RouterModule, Routes} from "@angular/router";
 import { CountfloorsComponent } from './pages/countfloors/countfloors.component';
+import {FormsModule} from "@angular/forms";
 
 const appRoutes: Routes = [
   {path: 'constructor', component: ConstructorComponent},
@@ -43,6 +44,7 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     MatButtonModule,
     MatInputModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

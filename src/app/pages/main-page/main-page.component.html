@@ -1,19 +1,24 @@
-<app-header></app-header>
+<div class="page">
+  <div class="content" *ngIf="!isAuth">
+    <form class="example-form">
+      <mat-form-field>
+        <mat-label>Login</mat-label>
+        <input type="text" matInput placeholder="User123" [(ngModel)]="login" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
 
-<div class="content" role="main">
-  <form class="example-form">
-    <mat-form-field>
-      <mat-label>Login</mat-label>
-      <input type="text" matInput placeholder="User123">
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input type="text" matInput placeholder="" [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+    </form>
 
-    <mat-form-field>
-      <mat-label>Password</mat-label>
-      <input type="password" matInput placeholder="" >
-    </mat-form-field>
-  </form>
-
-  <app-button routerLink="/countfloors" routerLinkActive="active"></app-button>
-
+  <app-button (click)="auth()" ></app-button>
+    <div class="errorMsg" *ngIf="isError" style="margin-top:40px">Login or password was incorrect</div>
+  </div>
+  <div class="authMsg" *ngIf="isAuth">
+    You've logged successfully
+  </div>
+  <div class="bottom" *ngIf="isAuth">
+    <app-footer style="transition: 0.3s ease"></app-footer>
+  </div>
 </div>
-<app-footer></app-footer>

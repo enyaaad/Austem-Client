@@ -1,6 +1,70 @@
-<app-header></app-header>
-<div class="content">
-  <h3>elements</h3>
-aasdasd,kasdkasdkas
+<div class="constructorPage">
+  <div class="content">
+    <div class="dropoutMenu">
+      <div class="cloak">ELEMENTS MENU</div>
+      <div class="list">
+        <ul>
+          <li>
+            <div class="dropdown">
+              <button>pipes</button>
+              <div class="dropdownElems">
+                <button>pipe1</button>
+                <button>pipe2</button>
+                <button>pipe3</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="dropdown">
+              <button>pipes corners</button>
+              <div class="dropdownElems">
+                <button>corner1</button>
+                <button>corner2</button>
+                <button>corner2</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="dropdown">
+              <button>radiators</button>
+              <div class="dropdownElems">
+                <button>radiators1</button>
+                <button>radiators2</button>
+                <button>radiators3</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="dropdown">
+              <button>boilers</button>
+              <div class="dropdownElems">
+                <button>boilers1</button>
+                <button>boilers2</button>
+                <button>boilers3</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="manageMenu">
+      <button class="clearButton" (click)="clearCanvas()" >clear canvas</button>
+      <button class="rotateElement">rotate element</button>
+      <button class="saveButton" (click)="saveCanvas()" >save project</button>
+    </div>
+    <h3>elements</h3>
+
+    <canvas
+      #canvas
+      width="{{canvasWidth}}"
+      height="{{canvasHeight}}"
+      (mousedown)="handleMouseDown($event)"
+      (mousemove)="handleMouseMove($event)"
+      (mouseup)="handleMouseUp($event)">
+    </canvas>
+
+
+  </div>
+  <app-footer></app-footer>
 </div>
-<app-footer></app-footer>
