@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
 interface Element {
   x: number;
@@ -6,27 +6,42 @@ interface Element {
   size: number;
   color: string;
 }
+
 @Component({
   selector: 'app-constructor',
   templateUrl: './constructor.component.html',
   styleUrls: ['./constructor.component.sass']
 })
-export class ConstructorComponent implements OnInit{
-  ngOnInit() {
-  }
-
+export class ConstructorComponent implements AfterViewInit{
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
   canvasWidth = 800;
   canvasHeight = 600;
-  elements: Element[] = [];
+  elements: Element[] = JSON.parse(localStorage.getItem('elements') || '{}');
   draggingElementIndex: number | null = null;
   dragOffsetX = 0;
   dragOffsetY = 0;
 
+  ngAfterViewInit() {
+    setTimeout(() => {this.redrawCanvas()}, 0.5);
+  }
 
-  handleMouseDown(event: MouseEvent) {
+  redrawCanvas():void{
+    const canvas = this.canvasRef.nativeElement;
+    const ctx = canvas.getContext('2d');
+    let lines = this.elements;
+    if(ctx)
+      lines.forEach(function (line: { x:any,y:any,size:number,color:string }) {
+        ctx.beginPath();
+        ctx.strokeStyle = line.color;
+        ctx.moveTo(line.x, line.y);
+        ctx.fillStyle = line.color;
+        ctx.fillRect(line.x, line.y, line.size, line.size);
+      });
+  }
+  handleMouseDown(event: MouseEvent):void  {
     const canvas = this.canvasRef.nativeElement;
     const rect = canvas.getBoundingClientRect();
+    const ctx = canvas.getContext('2d');
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
 
@@ -49,13 +64,18 @@ export class ConstructorComponent implements OnInit{
         color: 'red'
       };
       this.elements.push(newElement);
+      if(ctx){
+        ctx.fillStyle = newElement.color;
+        ctx.fillRect(newElement.x, newElement.y, newElement.size, newElement.size);
+      }
       this.draggingElementIndex = this.elements.indexOf(newElement);
       this.dragOffsetX = 0;
       this.dragOffsetY = 0;
     }
+    console.log(this.draggingElementIndex)
   }
 
-  handleMouseMove(event: MouseEvent) {
+  handleMouseMove(event: MouseEvent):void  {
     if (this.draggingElementIndex !== null) {
       const canvas = this.canvasRef.nativeElement;
       const rect = canvas.getBoundingClientRect();
@@ -69,13 +89,24 @@ export class ConstructorComponent implements OnInit{
     }
   }
 
-  handleMouseUp(event: MouseEvent) {
+  handleMouseUp(event: MouseEvent):void  {
     this.draggingElementIndex = null;
     this.dragOffsetX = 0;
     this.dragOffsetY = 0;
+    localStorage.setItem('elements',JSON.stringify(this.elements))
   }
 
-  drawElements() {
+  clearCanvas():void {
+    this.elements = [];
+    const canvas = this.canvasRef.nativeElement;
+    const ctx = canvas.getContext('2d');
+    if(ctx)
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    localStorage.setItem('elements',JSON.stringify(this.elements))
+
+  }
+
+  drawElements():void  {
     const canvas = this.canvasRef.nativeElement;
     const ctx = canvas.getContext('2d');
     if (ctx) {
