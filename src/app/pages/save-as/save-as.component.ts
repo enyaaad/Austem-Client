@@ -6,21 +6,24 @@ import {mockupProj, Project} from "../../models/project";
   templateUrl: './save-as.component.html',
   styleUrls: ['./save-as.component.sass']
 })
-export class SaveASComponent implements AfterViewInit{
+export class SaveASComponent implements AfterViewInit, OnInit{
   data:Project[] = [];
   items = { ...localStorage };
-  ngAfterViewInit(): void {
-    this.filterLocalStorage();
-    console.log(this.data)
 
+  ngOnInit() {
 
   }
+
+  ngAfterViewInit(): void {
+    this.filterLocalStorage();
+  }
+
   constructor() {
   }
 
   filterLocalStorage(){
     for (let itemsKey in this.items) {
-      if(itemsKey.includes('canvas') || itemsKey.includes('Project')){
+      if(!itemsKey.includes('elements')){
         let proj = localStorage.getItem(itemsKey)
         if(proj)
           this.data.push({name:itemsKey,elements:[JSON.parse(proj)]})

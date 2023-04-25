@@ -1,15 +1,23 @@
 <div class="saveAsPage">
-  <div class="content">
-    <div class="projectCard" *ngFor="let project of data">
-      <div class="cardHeader">
-        {{project.name}}
-      </div>
-      <div class="cardFooter">
-        <button>
-          to Project
-        </button>
+  <div class="content" >
+    <div class="contentCards" >
+      <div class="projectCard" *ngFor="let project of data">
+        <div class="cardHeader">
+          <span> Project: <span class="projName">{{project.name}}</span></span>
+          1F
+          <p>Project Cost</p>
+        </div>
+        <div class="cardFooter">
+          <button>
+            to Project
+          </button>
+        </div>
       </div>
     </div>
+    <div class="contentIfNoData"  style="display: flex" *ngIf="data.length<1">
+      There is no saved projects
+    </div>
   </div>
+
 </div>
 <app-footer></app-footer>

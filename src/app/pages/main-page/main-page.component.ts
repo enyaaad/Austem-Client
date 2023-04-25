@@ -20,7 +20,9 @@ export class MainPageComponent{
     let response = axios.post('http://localhost:8080/example',{},{
       headers: {
         'Content-Type': 'application/json',
-        'Authorization' : 'Basic ' + req
+        'Authorization' : 'Basic ' + req,
+        'Access-Control-Allow-Methods' : 'POST, OPTIONS, GET, DELETE, PUT',
+        'Access-Control-Allow-Origin': '*'
       }
     }).then((res) =>{
       console.log(res);

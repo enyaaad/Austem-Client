@@ -13,6 +13,37 @@ body
   -webkit-box-shadow: 0px -7px 18px 2px rgba(34, 60, 80, 0.1)
   -moz-box-shadow: 0px -7px 18px 2px rgba(34, 60, 80, 0.1)
   box-shadow: 0px -7px 18px 2px rgba(34, 60, 80, 0.1)
+  .center
+    display: flex
+    flex-direction: row
+    .manageMenu
+      display: flex
+      height: 500px
+      justify-content: space-around
+      flex-direction: column
+      margin-right: 100px
+      button
+        cursor: pointer
+        background-color: transparent
+        border-radius: 5px
+        border: 1px solid darkgrey
+        height: 50px
+        width: 200px
+        margin: 5px
+        transition: 0.3s ease
+      button:hover
+        color: white
+        background-color: #FF7700
+      .projectButtons
+        height: 150px
+        display: flex
+        justify-content: space-around
+        flex-direction: column
+      .elementButtons
+        height: 150px
+        justify-content: space-around
+        display: flex
+        flex-direction: column
   .dropoutMenu
     position: absolute
     top: 0
@@ -26,23 +57,6 @@ body
       justify-content: center
       cursor: default
       transition: 0.3s ease
-    .list
-      .dropdown
-        overflow: hidden
-      .dropdown .dropdownElems
-        display: none
-        position: absolute
-        min-width: 200px
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2)
-      .dropdown:hover .dropdownElems
-        display: flex
-        flex-direction: column
-      .dropdown:hover .dropdownElems button
-        cursor: pointer
-        min-height: 30px
-        border: none
-        outline: none
-
   .dropoutMenu:hover
     .cloak
       transform: translateY(50px)
