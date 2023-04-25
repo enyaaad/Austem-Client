@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 
 interface Element {
   x: number;
@@ -12,25 +12,28 @@ interface Element {
   templateUrl: './constructor.component.html',
   styleUrls: ['./constructor.component.sass']
 })
-export class ConstructorComponent implements AfterViewInit{
+export class ConstructorComponent implements AfterViewInit {
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
   canvasWidth = 800;
   canvasHeight = 600;
   elements: Element[] = JSON.parse(localStorage.getItem('elements') || '{}');
+  savedCanvases:string[] = [];
   draggingElementIndex: number | null = null;
   dragOffsetX = 0;
   dragOffsetY = 0;
 
   ngAfterViewInit() {
-    setTimeout(() => {this.redrawCanvas()}, 0.5);
+    setTimeout(() => {
+      this.redrawCanvas()
+    }, 0.5);
   }
 
-  redrawCanvas():void{
+  redrawCanvas(): void {
     const canvas = this.canvasRef.nativeElement;
     const ctx = canvas.getContext('2d');
     let lines = this.elements;
-    if(ctx)
-      lines.forEach(function (line: { x:any,y:any,size:number,color:string }) {
+    if (ctx)
+      lines.forEach(function (line: { x: any, y: any, size: number, color: string }) {
         ctx.beginPath();
         ctx.strokeStyle = line.color;
         ctx.moveTo(line.x, line.y);
@@ -38,7 +41,8 @@ export class ConstructorComponent implements AfterViewInit{
         ctx.fillRect(line.x, line.y, line.size, line.size);
       });
   }
-  handleMouseDown(event: MouseEvent):void  {
+
+  handleMouseDown(event: MouseEvent): void {
     const canvas = this.canvasRef.nativeElement;
     const rect = canvas.getBoundingClientRect();
     const ctx = canvas.getContext('2d');
@@ -64,7 +68,7 @@ export class ConstructorComponent implements AfterViewInit{
         color: 'red'
       };
       this.elements.push(newElement);
-      if(ctx){
+      if (ctx) {
         ctx.fillStyle = newElement.color;
         ctx.fillRect(newElement.x, newElement.y, newElement.size, newElement.size);
       }
@@ -75,7 +79,7 @@ export class ConstructorComponent implements AfterViewInit{
     console.log(this.draggingElementIndex)
   }
 
-  handleMouseMove(event: MouseEvent):void  {
+  handleMouseMove(event: MouseEvent): void {
     if (this.draggingElementIndex !== null) {
       const canvas = this.canvasRef.nativeElement;
       const rect = canvas.getBoundingClientRect();
@@ -89,24 +93,24 @@ export class ConstructorComponent implements AfterViewInit{
     }
   }
 
-  handleMouseUp(event: MouseEvent):void  {
+  handleMouseUp(event: MouseEvent): void {
     this.draggingElementIndex = null;
     this.dragOffsetX = 0;
     this.dragOffsetY = 0;
-    localStorage.setItem('elements',JSON.stringify(this.elements))
+    localStorage.setItem('elements', JSON.stringify(this.elements))
   }
 
-  clearCanvas():void {
+  clearCanvas(): void {
     this.elements = [];
     const canvas = this.canvasRef.nativeElement;
     const ctx = canvas.getContext('2d');
-    if(ctx)
+    if (ctx)
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-    localStorage.setItem('elements',JSON.stringify(this.elements))
+    localStorage.setItem('elements', JSON.stringify(this.elements))
 
   }
 
-  drawElements():void  {
+  drawElements(): void {
     const canvas = this.canvasRef.nativeElement;
     const ctx = canvas.getContext('2d');
     if (ctx) {
@@ -116,5 +120,15 @@ export class ConstructorComponent implements AfterViewInit{
         ctx.fillRect(element.x, element.y, element.size, element.size);
       });
     }
+  }
+  randomNumberBetween(min: number, max: number): number {
+    return Math.random() * (max - min) + min;
+  }
+  saveCanvas():void{
+    let currentCanvas = localStorage.getItem('elements');
+    let saveName:string = 'Project ' + Math.floor(this.randomNumberBetween(1,10000))
+    this.savedCanvases.push(saveName);
+    if(currentCanvas)
+      localStorage.setItem(saveName,currentCanvas)
   }
 }

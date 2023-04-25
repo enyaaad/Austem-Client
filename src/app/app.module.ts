@@ -14,7 +14,6 @@ import { StoragePageComponent } from './pages/storage-page/storage-page.componen
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import {RouterModule, Routes} from "@angular/router";
-import {KonvaModule} from "ng2-konva";
 import { CountfloorsComponent } from './pages/countfloors/countfloors.component';
 import {FormsModule} from "@angular/forms";
 
@@ -38,16 +37,15 @@ const appRoutes: Routes = [
     StoragePageComponent,
     CountfloorsComponent
   ],
-    imports: [
-        RouterModule.forRoot(appRoutes),
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatButtonModule,
-        MatInputModule,
-        KonvaModule,
-        FormsModule
-    ],
+  imports: [
+    RouterModule.forRoot(appRoutes),
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatInputModule,
+    FormsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

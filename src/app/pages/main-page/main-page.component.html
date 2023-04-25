@@ -1,5 +1,5 @@
 <div class="page">
-  <div class="content" role="main">
+  <div class="content" *ngIf="!isAuth">
     <form class="example-form">
       <mat-form-field>
         <mat-label>Login</mat-label>
@@ -11,9 +11,14 @@
         <input type="text" matInput placeholder=""  [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
       </mat-form-field>
     </form>
-
     <app-button class="loginButton" (click)="auth()" ></app-button>
 
+    <div class="errorMsg" *ngIf="isError" style="margin-top:40px">Login or password was incorrect</div>
+
   </div>
-  <app-footer></app-footer>
+  <div class="authMsg" *ngIf="isAuth">
+    You've logged successfully
+  </div>
+    <app-footer style="transition: 0.3s ease"></app-footer>
+  </div>
 </div>

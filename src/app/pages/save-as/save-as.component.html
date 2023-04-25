@@ -1,4 +1,15 @@
-<div class="content">
-  saveas
+<div class="saveAsPage">
+  <div class="content">
+    <div class="projectCard" *ngFor="let project of data">
+      <div class="cardHeader">
+        {{project.name}}
+      </div>
+      <div class="cardFooter">
+        <button>
+          to Project
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 <app-footer></app-footer>
