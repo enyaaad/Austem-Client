@@ -16,6 +16,7 @@ import {MatInputModule} from "@angular/material/input";
 import {RouterModule, Routes} from "@angular/router";
 import {KonvaModule} from "ng2-konva";
 import { CountfloorsComponent } from './pages/countfloors/countfloors.component';
+import {FormsModule} from "@angular/forms";
 
 const appRoutes: Routes = [
   {path: 'constructor', component: ConstructorComponent},
@@ -37,15 +38,16 @@ const appRoutes: Routes = [
     StoragePageComponent,
     CountfloorsComponent
   ],
-  imports: [
-    RouterModule.forRoot(appRoutes),
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatInputModule,
-    KonvaModule
-  ],
+    imports: [
+        RouterModule.forRoot(appRoutes),
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatInputModule,
+        KonvaModule,
+        FormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

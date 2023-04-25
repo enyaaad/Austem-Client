@@ -3,16 +3,16 @@
     <form class="example-form">
       <mat-form-field>
         <mat-label>Login</mat-label>
-        <input type="text" matInput placeholder="User123">
+        <input type="text" matInput placeholder="User123" [(ngModel)]="login"  [ngModelOptions]="{standalone: true}">
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Password</mat-label>
-        <input type="text" matInput placeholder="" >
+        <input type="text" matInput placeholder=""  [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
       </mat-form-field>
     </form>
 
-    <app-button routerLink="/countfloors" routerLinkActive="active"></app-button>
+    <app-button class="loginButton" (click)="auth()" ></app-button>
 
   </div>
   <app-footer></app-footer>
