@@ -126,8 +126,9 @@ export class ConstructorComponent implements AfterViewInit {
   }
   saveCanvas():void{
     let currentCanvas = localStorage.getItem('elements');
-    let saveName:string = 'canvas ' + Math.floor(this.randomNumberBetween(1,10000))
+    let saveName:string = 'Project ' + Math.floor(this.randomNumberBetween(1,10000))
     this.savedCanvases.push(saveName);
-    localStorage.setItem(saveName,JSON.stringify(currentCanvas))
+    if(currentCanvas)
+      localStorage.setItem(saveName,currentCanvas)
   }
 }
