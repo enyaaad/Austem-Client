@@ -1,15 +1,19 @@
 <div class="saveAsPage">
   <div class="content" >
     <div class="contentCards" >
-      <div class="projectCard" *ngFor="let project of data">
+      <div class="projectCard" *ngFor="let project of data; index as i">
         <div class="cardHeader">
           <span> Project: <span class="projName">{{project.name}}</span></span>
           1F
           <p>Project Cost</p>
         </div>
         <div class="cardFooter">
-          <button>
+          <button (click)="selectProject(i)">
             to Project
+          </button>
+
+          <button (click)="deleteProject(i)" >
+            delete Project
           </button>
         </div>
       </div>
@@ -18,6 +22,6 @@
       There is no saved projects
     </div>
   </div>
-
+<!--  сделать кнопки удалить отдельный проект и сделать кнопку удаления всех проектов-->
 </div>
 <app-footer></app-footer>

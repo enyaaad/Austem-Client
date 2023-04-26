@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {CookieService} from "ngx-cookie-service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-countfloors',
@@ -7,4 +9,8 @@ import { Component } from '@angular/core';
 })
 export class CountfloorsComponent {
 
+  constructor(private cookieService: CookieService, public router: Router) {
+    if(!cookieService.check('token'))
+      this.router.navigate(['mainpage']);
+  }
 }

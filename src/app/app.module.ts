@@ -16,12 +16,14 @@ import {MatInputModule} from "@angular/material/input";
 import {RouterModule, Routes} from "@angular/router";
 import { CountfloorsComponent } from './pages/countfloors/countfloors.component';
 import {FormsModule} from "@angular/forms";
+import {CookieService} from "ngx-cookie-service";
 
 const appRoutes: Routes = [
   {path: 'constructor', component: ConstructorComponent},
   {path: 'saveas', component: SaveASComponent},
   {path: 'storagepage', component: StoragePageComponent},
   {path: 'countfloors', component: CountfloorsComponent},
+  {path: 'mainpage', component: MainPageComponent},
   {path: '**', component: MainPageComponent}
 ];
 
@@ -46,7 +48,9 @@ const appRoutes: Routes = [
     MatInputModule,
     FormsModule,
   ],
-  providers: [],
+  providers: [
+    CookieService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

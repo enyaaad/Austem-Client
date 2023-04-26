@@ -42,7 +42,7 @@
 
 
       <div class="canvasArea">
-        <h3>Project</h3>
+        <h3>Project {{projectName}}</h3>
 
         <canvas
           #canvas
@@ -56,7 +56,6 @@
     </div>
 
     <span style="margin-top: 30px" *ngIf="selectedElement !=''">Selected Element: {{selectedElement}}</span>
-
   </div>
   <app-footer></app-footer>
 </div>
