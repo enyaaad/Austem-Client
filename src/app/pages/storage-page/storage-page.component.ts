@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {mockup, Product} from "../../models/product";
+import {CookieService} from "ngx-cookie-service";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -10,4 +12,8 @@ import {mockup, Product} from "../../models/product";
 export class StoragePageComponent {
   data: Product[] = [...mockup];
 
+  constructor(private cookieService: CookieService, public router: Router) {
+    if(!cookieService.check('token'))
+      this.router.navigate(['mainpage']);
+  }
 }

@@ -1,6 +1,7 @@
 
 import {Component, OnInit} from '@angular/core';
 import axios from "axios";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-main-page',
@@ -13,9 +14,13 @@ export class MainPageComponent{
   password: string ='';
   isAuth:boolean = false;
   isError:boolean = false;
-  auth(){
+
+  constructor(private cookieService: CookieService) {
+  }
+  auth():void{
     let req = btoa(this.login+":"+this.password);
     console.log(req);
+
 
     let response = axios.post('http://localhost:8080/example',{},{
       headers: {
@@ -27,9 +32,9 @@ export class MainPageComponent{
     }).then((res) =>{
       console.log(res);
       this.isAuth = true;
+      this.cookieService.set('token',req)
       }).catch((err) =>{
         this.isError = true;
-        console.log(err);
     })
   }
 }

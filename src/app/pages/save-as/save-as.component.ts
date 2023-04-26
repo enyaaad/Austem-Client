@@ -1,5 +1,7 @@
-import { Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
+import {Component, OnInit, ViewChild, AfterViewInit, Input} from '@angular/core';
 import {mockupProj, Project} from "../../models/project";
+import {CookieService} from "ngx-cookie-service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-save-as',
@@ -10,18 +12,20 @@ export class SaveASComponent implements AfterViewInit, OnInit{
   data:Project[] = [];
   items = { ...localStorage };
 
+
   ngOnInit() {
-
-  }
-
-  ngAfterViewInit(): void {
     this.filterLocalStorage();
   }
 
-  constructor() {
+  ngAfterViewInit(): void {
   }
 
-  filterLocalStorage(){
+  constructor(private cookieService: CookieService, public router: Router) {
+    if(!cookieService.check('token'))
+      this.router.navigate(['mainpage']);
+  }
+
+  filterLocalStorage(): void{
     for (let itemsKey in this.items) {
       if(!itemsKey.includes('elements')){
         let proj = localStorage.getItem(itemsKey)
@@ -31,4 +35,19 @@ export class SaveASComponent implements AfterViewInit, OnInit{
     }
   }
 
+  deleteProject(projIndex: number) {
+    this.data = this.data.filter((value, index, array)=>{
+      localStorage.removeItem(this.data[projIndex].name)
+     return index !== projIndex
+    })
+  }
+
+  selectProject(projIndex: number) {
+    let projectElements = [...this.data[projIndex].elements]
+    if(projectElements){
+      localStorage.setItem('elements',JSON.stringify(projectElements[0]));
+      this.cookieService.set('projectName',this.data[projIndex].name)
+    }
+    this.router.navigate(['constructor']);
+  }
 }
