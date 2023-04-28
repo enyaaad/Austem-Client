@@ -23,11 +23,20 @@
         width: 20%
       .storage-right
         width: 20%
-    .storageElement
+    .storageInput
+      background-color: transparent
+      border: none
       padding: 5px
+      visibility: hidden
+      transition: 0.3s ease
+    .storageInput-active
+      border: #FF7700 1px solid
+      visibility: visible
+      background-color: #eeeeee
+    .storageElement
       display: flex
-      margin-top: 25px
-      margin-bottom: 25px
+      padding-bottom: 25px
+      padding-top: 25px
       border-bottom: 0.5px solid grey
       .storageElement-right
         width: 20%
@@ -35,6 +44,8 @@
         width: 60%
       .storageElement-mid
         width: 20%
+
+
   .buttons
     padding: 45px
     display: flex

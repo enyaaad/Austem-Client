@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild, AfterViewInit, Input} from '@angular/core';
-import {mockupProj, Project} from "../../models/project";
+import {Project} from "../../models/project";
 import {CookieService} from "ngx-cookie-service";
 import {Router} from "@angular/router";
 
@@ -37,7 +37,8 @@ export class SaveASComponent implements AfterViewInit, OnInit{
 
   deleteProject(projIndex: number) {
     this.data = this.data.filter((value, index, array)=>{
-      localStorage.removeItem(this.data[projIndex].name)
+      localStorage.removeItem(this.data[projIndex].name);
+      this.cookieService.delete(this.data[projIndex].name);
      return index !== projIndex
     })
   }
