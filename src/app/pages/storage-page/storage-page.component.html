@@ -12,7 +12,7 @@
           Product Cost
         </div>
       </div>
-      <div *ngFor="let product of data" class="storageElement">
+      <div *ngFor="let product of data;" class="storageElement" (click)="putToSelectedItems(product.id)">
         <div class="storageElement-left">
           {{product.name}}
         </div>
@@ -23,10 +23,15 @@
           {{product.cost}}
         </div>
       </div>
+      <div class="storageElement">
+        <input type="text" class="storageElement-left storageInput" [(ngModel)]="productName" >
+        <input type="text" class="storageElement-mid storageInput" [(ngModel)]="productAmount">
+        <input type="text" class="storageElement-right storageInput" [(ngModel)]="productCost">
+      </div>
     </div>
     <div class="buttons">
-      <button class="additem button">add</button>
-      <button class="removeitem button">remove</button>
+      <button class="additem button" (click)="addElement()" >add</button>
+      <button class="removeitem button" (click)="removeElement(selectedItems)">remove</button>
       <button class="edititem button">edit</button>
     </div>
   </div>

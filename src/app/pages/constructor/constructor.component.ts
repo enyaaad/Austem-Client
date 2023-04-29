@@ -29,11 +29,22 @@ export class ConstructorComponent implements AfterViewInit {
   dragOffsetX = 0;
   dragOffsetY = 0;
   selectedElement: string = '';
-  currentShape: 'square' | 'line' | 'rectangle' = 'rectangle';
+  currentShape: 'square' | 'line' | 'rectangle' = 'square';
   projectName: string  = '';
 
   setShape(shape: 'square' | 'line' | 'rectangle') {
     this.currentShape = shape;
+    switch (shape){
+      case "square":
+        this.selectedElement = "boiler";
+        break;
+      case "rectangle":
+        this.selectedElement = "radiator";
+        break
+      case "line":
+        this.selectedElement = "pipe"
+        break
+    }
   }
 
   constructor(private cookieService: CookieService, public router: Router) {
@@ -41,13 +52,18 @@ export class ConstructorComponent implements AfterViewInit {
       this.router.navigate(['mainpage']);
     if(this.cookieService.get('projectName'))
       this.projectName = this.cookieService.get('projectName')
-    else
+    else{
       this.projectName = 'New'
+      this.elements = [];
+      localStorage.setItem('elements', JSON.stringify(this.elements))
+
+    }
+
   }
 
   ngAfterViewInit() {
     setTimeout(() => {
-
+      this.setShape("square");
       this.redrawCanvas()
     }, 0);
   }
