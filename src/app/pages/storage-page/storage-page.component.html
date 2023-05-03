@@ -11,28 +11,52 @@
         <div class="storage-right">
           Product Cost
         </div>
+
       </div>
-      <div *ngFor="let product of data;" class="storageElement" (click)="putToSelectedItems(product.id)">
-        <div class="storageElement-left">
-          {{product.name}}
+      <div *ngFor="let product of data;" class="storageElement" (click)="putToSelectedItems(product.id);">
+
+        <div class="item" (click)="selectItem(product.id)" *ngIf="!product.isSelected">
+          <div class="storageElement-left">
+            {{product.name}}
+          </div>
+          <div class="storageElement-mid">
+            {{product.amount}}
+          </div>
+          <div class="storageElement-right">
+            {{product.cost}}
+          </div>
         </div>
-        <div class="storageElement-mid">
-          {{product.amount}}
+        <div class="selectedItem" (click)="selectItem(product.id)" *ngIf="product.isSelected">
+          <div class="storageElement-left">
+            {{product.name}}
+          </div>
+          <div class="storageElement-mid">
+            {{product.amount}}
+          </div>
+          <div class="storageElement-right">
+            {{product.cost}}
+          </div>
         </div>
-        <div class="storageElement-right">
-          {{product.cost}}
-        </div>
+
       </div>
       <div class="storageElement">
-        <input type="text" class="storageElement-left storageInput" [(ngModel)]="productName" >
-        <input type="text" class="storageElement-mid storageInput" [(ngModel)]="productAmount">
-        <input type="text" class="storageElement-right storageInput" [(ngModel)]="productCost">
+        <input type="text" class="storageElement-left storageInput" [(ngModel)]="productName" placeholder="Product Name">
+        <input type="text" class="storageElement-mid storageInput" [(ngModel)]="productAmount" placeholder="Product Amount">
+        <input type="text" class="storageElement-right storageInput" [(ngModel)]="productCost" placeholder="Product Cost">
       </div>
+
     </div>
+    <div class="editElementInputs">
+      <input type="text" class="editInput" [(ngModel)]="productNameforEdit" placeholder="Product Name">
+      <input type="text" class="editInput" [(ngModel)]="productAmountforEdit" placeholder="Product Amount">
+      <input type="text" class="editInput" [(ngModel)]="productCostforEdit" placeholder="Product Cost">
+    </div>
+
+
     <div class="buttons">
       <button class="additem button" (click)="addElement()" >add</button>
       <button class="removeitem button" (click)="removeElement(selectedItems)">remove</button>
-      <button class="edititem button">edit</button>
+      <button class="edititem button" (click)="editItem()">edit</button>
     </div>
   </div>
   <app-footer></app-footer>

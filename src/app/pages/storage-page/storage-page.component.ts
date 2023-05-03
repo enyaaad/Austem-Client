@@ -13,8 +13,11 @@ export class StoragePageComponent {
   data: Product[] = [...mockup];
   selectedItems: Set<number> = new Set();
   productName:string='';
-  productAmount:number=0;
-  productCost:number=0;
+  productAmount?:number;
+  productCost?:number;
+  productNameforEdit:string='';
+  productAmountforEdit?:number;
+  productCostforEdit?:number;
 
   constructor(private cookieService: CookieService, public router: Router) {
     if(!cookieService.check('token'))
@@ -27,15 +30,19 @@ export class StoragePageComponent {
     document.querySelectorAll('.storageInput').forEach(input=>{
       input.classList.add('storageInput-active');
     })
-    console.log(this.productName,this.productAmount,this.productCost)
-    if(this.productName && this.onlyNumbers(this.productCost.toString()) && this.productCost !=0 && this.onlyNumbers(this.productAmount.toString()) && this.productAmount !=0 ){
-      mockup.push({id:mockup.length+1,name:this.productName, amount:this.productAmount, cost:this.productCost})
-      this.data = [...mockup];
-      console.log(mockup)
+    if(this.productAmount && this.productCost){
+      if(this.productName && this.onlyNumbers(this.productCost.toString()) && this.productCost !=0 && this.onlyNumbers(this.productAmount.toString()) && this.productAmount !=0 ){
+        mockup.push({id:mockup.length+1,name:this.productName, amount:this.productAmount, cost:this.productCost,isSelected:false})
+        this.data = [...mockup];
+        console.log(mockup)
+      }
+      this.productName ='';
+      this.productAmount = undefined;
+      this.productCost = undefined;
+      document.querySelectorAll('.storageInput').forEach(input=>{
+        input.classList.remove('storageInput-active');
+      })
     }
-    this.productName = '';
-    this.productCost = 0;
-    this.productAmount = 0;
   }
   putToSelectedItems(id:number):void{
     if(this.selectedItems.has(id)){
@@ -43,19 +50,47 @@ export class StoragePageComponent {
     }else{
       this.selectedItems.add(id);
     }
-    console.log( this.selectedItems);
-
   }
   removeElement(selectedList:Set<number>){
     selectedList.forEach(id=>{
-      this.data.filter(product=>{
-        console.log(product.id,id)
-        return this.data
+      this.data = this.data.filter(function (product){
+        return (id !== product.id)
       })
+    })
+    this.selectedItems.clear();
+  }
+
+  selectItem(index:number) {
+    this.data.forEach(el=>{
+      if(el.id == index)
+        el.isSelected = !el.isSelected;
     })
   }
 
-  editElement(){
+  editItem() {
+    if(this.selectedItems.size == 1){
+      document.querySelectorAll('.editInput').forEach(input=>{
+        input.classList.add('editInput-active');
+      })
+      if(this.productCostforEdit && this.productAmountforEdit)
+      if(this.productNameforEdit && this.onlyNumbers(this.productCostforEdit.toString()) && this.productCostforEdit !=0 && this.onlyNumbers(this.productAmountforEdit.toString()) && this.productAmountforEdit !=0 ){
+        this.data.forEach(el=>{
+          if(el.isSelected){
+            el.name = this.productNameforEdit
+            el.amount = this.productAmountforEdit
+            el.cost = this.productCostforEdit
+          }
+        })
+        this.productNameforEdit ='';
+        this.productAmountforEdit = undefined;
+        this.productCostforEdit = undefined;
+      }
 
+    }
+    else{
+      document.querySelectorAll('.editInput').forEach(input=>{
+        input.classList.remove('editInput-active');
+      })
+    }
   }
 }
