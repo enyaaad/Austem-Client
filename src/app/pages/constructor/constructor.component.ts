@@ -19,20 +19,22 @@ interface Element {
   styleUrls: ['./constructor.component.sass']
 })
 export class ConstructorComponent implements AfterViewInit {
-  @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
-  canvasWidth = 800;
-  canvasHeight = 600;
-  elements: Element[] = JSON.parse(localStorage.getItem('elements') || '{}') || {};
-  savedCanvases:string[] = [];
-  draggingElementIndex: number | null = null;
-  lastDraggedElement: number  = 0;
-  dragOffsetX = 0;
-  dragOffsetY = 0;
-  selectedElement: string = '';
-  currentShape: 'square' | 'line' | 'rectangle' = 'square';
-  projectName: string  = '';
+  private draggingElementIndex: number | null = null;
+  private lastDraggedElement: number  = 0;
+  private dragOffsetX:number = 0;
+  private dragOffsetY:number = 0;
+  private currentShape: 'square' | 'line' | 'rectangle' = 'square';
 
-  setShape(shape: 'square' | 'line' | 'rectangle') {
+  protected canvasWidth:number = 800;
+  protected canvasHeight:number = 600;
+  protected elements: Element[] = JSON.parse(localStorage.getItem('elements') || '{}') || {};
+  protected savedCanvases:string[] = [];
+  protected projectName: string  = '';
+
+  protected selectedElement: string = '';
+  @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
+
+  protected setShape(shape: 'square' | 'line' | 'rectangle'):void {
     this.currentShape = shape;
     switch (shape){
       case "square":
@@ -56,19 +58,18 @@ export class ConstructorComponent implements AfterViewInit {
       this.projectName = 'New'
       this.elements = [];
       localStorage.setItem('elements', JSON.stringify(this.elements))
-
     }
 
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit():void {
     setTimeout(() => {
       this.setShape("square");
       this.redrawCanvas()
     }, 0);
   }
 
-  redrawCanvas(): void {
+  protected redrawCanvas(): void {
     const canvas = this.canvasRef.nativeElement;
     const ctx = canvas.getContext('2d');
     let lines = this.elements;
@@ -102,7 +103,7 @@ export class ConstructorComponent implements AfterViewInit {
       });
   }
 
-  handleMouseDown(event: MouseEvent): void {
+  protected handleMouseDown(event: MouseEvent): void {
     const canvas = this.canvasRef.nativeElement;
     const rect = canvas.getBoundingClientRect();
     const ctx = canvas.getContext('2d');
@@ -128,7 +129,7 @@ export class ConstructorComponent implements AfterViewInit {
     }
   }
 
-  handleMouseMove(event: MouseEvent): void {
+  protected handleMouseMove(event: MouseEvent): void {
     if (this.draggingElementIndex !== null) {
       const canvas = this.canvasRef.nativeElement;
       const rect = canvas.getBoundingClientRect();
@@ -142,14 +143,14 @@ export class ConstructorComponent implements AfterViewInit {
     }
   }
 
-  handleMouseUp(event: MouseEvent): void {
+  protected handleMouseUp(event: MouseEvent): void {
     this.draggingElementIndex = null;
     this.dragOffsetX = 0;
     this.dragOffsetY = 0;
     localStorage.setItem('elements', JSON.stringify(this.elements))
   }
 
-  clearCanvas(): void {
+  protected clearCanvas(): void {
     this.elements = [];
     const canvas = this.canvasRef.nativeElement;
     const ctx = canvas.getContext('2d');
@@ -159,7 +160,7 @@ export class ConstructorComponent implements AfterViewInit {
 
   }
 
-  drawElements(): void {
+  private drawElements(): void {
     const canvas = this.canvasRef.nativeElement;
     const ctx = canvas.getContext('2d');
     if (ctx) {
@@ -194,10 +195,10 @@ export class ConstructorComponent implements AfterViewInit {
     }
   }
 
-  randomNumberBetween(min: number, max: number): number {
+  public randomNumberBetween(min: number, max: number): number {
     return Math.random() * (max - min) + min;
   }
-  saveCanvas():void{
+  public saveCanvas():void{
     let currentCanvas = localStorage.getItem('elements');
     if(this.cookieService.check('projectName')){
      let items = { ...localStorage };
@@ -220,7 +221,7 @@ export class ConstructorComponent implements AfterViewInit {
       }
     }
   }
-  switchDrawElements(ctx: CanvasRenderingContext2D,type:string,x:number,y:number){
+  private switchDrawElements(ctx: CanvasRenderingContext2D,type:string,x:number,y:number){
     switch (type) {
       case 'square':
         let newSquare: Element = {
@@ -274,7 +275,7 @@ export class ConstructorComponent implements AfterViewInit {
         break;
     }
   }
-  rotateElement():void{
+  protected rotateElement():void{
     if(this.elements.length > 0)
       if (this.lastDraggedElement !== -1 ) {
         const canvas = this.canvasRef.nativeElement;
@@ -303,13 +304,18 @@ export class ConstructorComponent implements AfterViewInit {
       }
   }
 
-  deleteElement():void{
+  protected deleteElement():void{
+    console.log(this.lastDraggedElement)
     const canvas = this.canvasRef.nativeElement;
     const ctx = canvas.getContext('2d');
     if(ctx){
-      if(this.lastDraggedElement){
-        this.elements.splice(this.lastDraggedElement,1)
+      if(this.lastDraggedElement || this.lastDraggedElement == 0){
+        console.log(this.lastDraggedElement)
+        this.elements = this.elements.filter((value, index) => {
+          return index!==this.lastDraggedElement
+        })
         this.drawElements();
+        this.lastDraggedElement = -1;
 
       }
     }

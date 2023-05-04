@@ -13,7 +13,7 @@
     margin-left: 10%
     width: 850px
     height: 450px
-    background-color: #eeeeee
+    background-color: #dcdcdc
     overflow: scroll
     .headers
       display: flex
@@ -35,30 +35,68 @@
       background-color: #eeeeee
     .storageElement
       display: flex
-      padding-bottom: 25px
-      padding-top: 25px
       border-bottom: 0.5px solid grey
+      transition: 0.3s ease
       .storageElement-right
         width: 20%
       .storageElement-left
         width: 60%
       .storageElement-mid
         width: 20%
-
-
+      .item
+        display: flex
+        width: 100%
+        padding-bottom: 25px
+        transition: 0.3s ease
+        padding-top: 25px
+        .storageElement-right
+          width: 20%
+        .storageElement-left
+          width: 60%
+        .storageElement-mid
+          width: 20%
+      .selectedItem
+        background: linear-gradient(90deg, rgba(221,221,221,1) 0%, rgba(185,185,185,1) 99%)
+        display: flex
+        width: 100%
+        transition: 0.3s ease
+        padding-bottom: 25px
+        padding-top: 25px
+        .storageElement-right
+          width: 20%
+        .storageElement-left
+          width: 60%
+        .storageElement-mid
+          width: 20%
   .buttons
-    padding: 45px
     display: flex
     flex-direction: column
     height: 50%
     justify-content: space-around
+  .editElementInputs
+    display: flex
+    flex-direction: column
+    .editInput
+      margin: 20px 10px
+      padding: 15px
+      visibility: hidden
+    .editInput-active
+      margin: 20px 10px
+      padding: 15px
+      visibility: visible
+
 .button
   cursor: pointer
+  background-color: transparent
+  border-radius: 5px
+  border: 1px solid darkgrey
   height: 50px
   width: 200px
-  background-color: #FF7700
-  border-radius: 10px
-  border-color: transparent
+  margin: 5px
   transition: 0.3s ease
 .button:hover
-  background-color: #cb6100
+  background-color: #fc7900
+.errorMessage
+  display: flex
+  width: 100%
+  justify-content: center
