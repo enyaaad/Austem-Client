@@ -26,6 +26,7 @@
             {{product.cost}}
           </div>
         </div>
+
         <div class="selectedItem" (click)="selectItem(product.id)" *ngIf="product.isSelected">
           <div class="storageElement-left">
             {{product.name}}
@@ -37,8 +38,8 @@
             {{product.cost}}
           </div>
         </div>
-
       </div>
+
       <div class="storageElement">
         <input type="text" class="storageElement-left storageInput" [(ngModel)]="productName" placeholder="Product Name">
         <input type="text" class="storageElement-mid storageInput" [(ngModel)]="productAmount" placeholder="Product Amount">
@@ -46,19 +47,25 @@
       </div>
 
     </div>
+
     <div class="editElementInputs">
       <input type="text" class="editInput" [(ngModel)]="productNameforEdit" placeholder="Product Name">
       <input type="text" class="editInput" [(ngModel)]="productAmountforEdit" placeholder="Product Amount">
       <input type="text" class="editInput" [(ngModel)]="productCostforEdit" placeholder="Product Cost">
     </div>
 
-
     <div class="buttons">
       <button class="additem button" (click)="addElement()" >add</button>
       <button class="removeitem button" (click)="removeElement(selectedItems)">remove</button>
       <button class="edititem button" (click)="editItem()">edit</button>
+      <div class="errorMessage" *ngIf="isError">
+        <span style="display: flex;flex-direction: column;align-items: center">Editing two or more items is <p>forbidden</p> </span>
+      </div>
     </div>
+
+
   </div>
+
   <app-footer></app-footer>
 
 </div>

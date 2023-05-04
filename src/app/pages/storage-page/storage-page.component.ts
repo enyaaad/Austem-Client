@@ -18,6 +18,7 @@ export class StoragePageComponent {
   productNameforEdit:string='';
   productAmountforEdit?:number;
   productCostforEdit?:number;
+  isError:boolean = false;
 
   constructor(private cookieService: CookieService, public router: Router) {
     if(!cookieService.check('token'))
@@ -69,6 +70,7 @@ export class StoragePageComponent {
 
   editItem() {
     if(this.selectedItems.size == 1){
+      this.isError = false;
       document.querySelectorAll('.editInput').forEach(input=>{
         input.classList.add('editInput-active');
       })
@@ -87,10 +89,17 @@ export class StoragePageComponent {
       }
 
     }
+    else if(this.selectedItems.size >1 ){
+      document.querySelectorAll('.editInput').forEach(input=>{
+        input.classList.remove('editInput-active');
+      })
+      this.isError = true;
+    }
     else{
       document.querySelectorAll('.editInput').forEach(input=>{
         input.classList.remove('editInput-active');
       })
+      this.isError = false;
     }
   }
 }
