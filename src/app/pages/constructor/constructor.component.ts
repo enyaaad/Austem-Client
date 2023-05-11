@@ -11,6 +11,8 @@ interface Element {
   width?: number;
   height?: number;
   color: string;
+  direction?: string;
+
 }
 
 @Component({
@@ -24,6 +26,7 @@ export class ConstructorComponent implements AfterViewInit {
   private dragOffsetX:number = 0;
   private dragOffsetY:number = 0;
   private currentShape: 'square' | 'line' | 'rectangle' = 'square';
+  private isDragging : boolean = false;
 
   protected canvasWidth:number = 800;
   protected canvasHeight:number = 600;
@@ -87,9 +90,10 @@ export class ConstructorComponent implements AfterViewInit {
           case 'line':
             ctx.beginPath();
             ctx.strokeStyle = line.color;
-            ctx.fillStyle = line.color;
             ctx.moveTo(line.x, line.y);
-            ctx.stroke();
+            ctx.fillStyle = line.color;
+            if(line.height && line.width)
+              ctx.fillRect(line.x, line.y, line.width, line.height);
             break;
           case 'rectangle':
             ctx.beginPath();
@@ -118,35 +122,76 @@ export class ConstructorComponent implements AfterViewInit {
     );
     this.lastDraggedElement = this.draggingElementIndex;
 
+
     if (this.draggingElementIndex !== -1) {
       this.dragOffsetX = x - this.elements[this.draggingElementIndex].x;
       this.dragOffsetY = y - this.elements[this.draggingElementIndex].y;
+
+      // console.log(x,this.dragOffsetX,(this.elements[this.draggingElementIndex].size ||this.elements[this.draggingElementIndex].width || 100),this.dragOffsetY)
+      console.log(x,this.dragOffsetX,(this.elements[this.draggingElementIndex].size ||this.elements[this.draggingElementIndex].width || 100),this.dragOffsetY)
+      if(this.elements[this.draggingElementIndex].size == 50 || this.elements[this.draggingElementIndex].width == 50 ){
+        if(this.dragOffsetX >= 0 && this.dragOffsetX <= 5 || this.dragOffsetX > 45 && this.dragOffsetX <= 50){
+          this.isDragging = true;
+        }
+      }
+      else if(this.dragOffsetX >= 0 && this.dragOffsetX <= 5 || this.dragOffsetX > 95 && this.dragOffsetX < 100){
+        this.isDragging = true;
+      }
+      else if(this.dragOffsetX >= 0 && this.dragOffsetX <= 5 || this.dragOffsetX >= 7 && this.dragOffsetX < 10){
+        this.isDragging = true;
+      }
+      if(this.elements[this.draggingElementIndex].size == 50 || this.elements[this.draggingElementIndex].height == 50 ){
+        if(this.dragOffsetY >= 0 && this.dragOffsetY <= 5 || this.dragOffsetY > 45 && this.dragOffsetY <= 50){
+          this.isDragging = true;
+        }
+      }
+      else if(this.dragOffsetY >= 0 && this.dragOffsetY <= 5 || this.dragOffsetY > 95 && this.dragOffsetY < 100){
+        this.isDragging = true;
+      }
+      else if(this.dragOffsetY >= 0 && this.dragOffsetY <= 5 || this.dragOffsetY >= 7 && this.dragOffsetY < 10){
+        this.isDragging = true;
+      }
     } else {
       if(ctx)
         this.switchDrawElements(ctx,this.currentShape,x,y)
       this.dragOffsetX = 0;
       this.dragOffsetY = 0;
+      this.isDragging = false;
+
     }
   }
 
   protected handleMouseMove(event: MouseEvent): void {
+    const canvas = this.canvasRef.nativeElement;
+    const rect = canvas.getBoundingClientRect();
+    const x = event.clientX - rect.left - this.dragOffsetX;
+    const y = event.clientY - rect.top - this.dragOffsetY;
+
     if (this.draggingElementIndex !== null) {
-      const canvas = this.canvasRef.nativeElement;
-      const rect = canvas.getBoundingClientRect();
-      const x = event.clientX - rect.left - this.dragOffsetX;
-      const y = event.clientY - rect.top - this.dragOffsetY;
+      if (this.isDragging) {
+        // вычисляем новый размер квадрата на основе перемещения мыши
+        const newSize = Math.max(Math.abs(x - this.dragOffsetX), Math.abs(y - this.dragOffsetY));
+        let Size = newSize;
+        this.elements[this.lastDraggedElement].width = Size;
+        this.drawElements();
+
+        console.log(this.isDragging)
+      }
 
       this.elements[this.draggingElementIndex].x = x;
       this.elements[this.draggingElementIndex].y = y;
 
-      this.drawElements();
     }
+    this.drawElements();
+
+
   }
 
   protected handleMouseUp(event: MouseEvent): void {
     this.draggingElementIndex = null;
     this.dragOffsetX = 0;
     this.dragOffsetY = 0;
+    this.isDragging = false;
     localStorage.setItem('elements', JSON.stringify(this.elements))
   }
 
@@ -178,9 +223,10 @@ export class ConstructorComponent implements AfterViewInit {
           case 'line':
             ctx.beginPath();
             ctx.strokeStyle = element.color;
-            ctx.fillStyle = element.color;
             ctx.moveTo(element.x, element.y);
-            ctx.stroke();
+            ctx.fillStyle = element.color;
+            if(element.height && element.width)
+              ctx.fillRect(element.x, element.y, element.width, element.height);
             break;
           case 'rectangle':
             ctx.beginPath();
@@ -244,15 +290,15 @@ export class ConstructorComponent implements AfterViewInit {
           type: 'line',
           x: x,
           y: y,
+          width: 100,
+          height: 10,
           color: 'blue'
         };
         this.elements.push(newLine);
         if (ctx) {
-          ctx.beginPath();
-          ctx.strokeStyle = newLine.color;
-          ctx.moveTo(newLine.x, newLine.y);
-          ctx.lineTo(newLine.x+100, newLine.y);
-          ctx.stroke();
+          ctx.fillStyle = newLine.color;
+          if(newLine.height && newLine.width)
+            ctx.fillRect(newLine.x, newLine.y, newLine.width, newLine.height);
         }
         this.draggingElementIndex = this.elements.indexOf(newLine);
         break;
@@ -276,6 +322,7 @@ export class ConstructorComponent implements AfterViewInit {
     }
   }
   protected rotateElement():void{
+    console.log(this.elements[this.lastDraggedElement]);
     if(this.elements.length > 0)
       if (this.lastDraggedElement !== -1 ) {
         const canvas = this.canvasRef.nativeElement;
@@ -297,6 +344,16 @@ export class ConstructorComponent implements AfterViewInit {
               localStorage.setItem('elements', JSON.stringify(this.elements))
               break;
             case "line":
+              ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+              if(this.elements[this.lastDraggedElement].width === 100){
+                this.elements[this.lastDraggedElement].width = 10;
+                this.elements[this.lastDraggedElement].height = 100;
+              }else{
+                this.elements[this.lastDraggedElement].width = 100
+                this.elements[this.lastDraggedElement].height = 10;
+              }
+              this.redrawCanvas();
+              localStorage.setItem('elements', JSON.stringify(this.elements))
               break;
           }
           this.redrawCanvas()
