@@ -19,10 +19,18 @@ export class MainPageComponent{
   }
   auth():void{
     let req = btoa(this.login+":"+this.password);
-    console.log(req);
 
+    if(req != "YXNkOjEyMw=="){
+      this.isError = true;
+    }else{
+      this.isAuth = true;
+      this.cookieService.set('token',req)
+    }
 
-    let response = axios.post('http://localhost:8080/example',{},{
+  }
+
+  comm(){
+    /*let response = axios.post('http://localhost:8080/example',{},{
       headers: {
         'Content-Type': 'application/json',
         'Authorization' : 'Basic ' + req,
@@ -33,8 +41,8 @@ export class MainPageComponent{
       console.log(res);
       this.isAuth = true;
       this.cookieService.set('token',req)
-      }).catch((err) =>{
-        this.isError = true;
-    })
+    }).catch((err) =>{
+      this.isError = true;
+    })*/
   }
 }

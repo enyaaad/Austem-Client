@@ -48,7 +48,7 @@ export class SaveASComponent implements AfterViewInit, OnInit{
     if(projectElements){
       localStorage.setItem('elements',JSON.stringify(projectElements[0]));
       this.cookieService.set('projectName',this.data[projIndex].name)
-    }
+  }
     this.router.navigate(['constructor']);
   }
 }

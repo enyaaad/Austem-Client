@@ -30,8 +30,9 @@
           <button class="rotateElement" (click)="deleteElement()">delete element</button>
         </div>
         <div class="projectButtons">
-          <button class="clearButton" (click)="clearCanvas()" >clear canvas</button>
+          <button class="clearButton" (click)="clearCanvas()" >clear project</button>
           <button class="saveButton" (click)="saveCanvas()" >save project</button>
+          <button class="newprojButton" (click)="newProject()" >new project</button>
         </div>
       </div>
 
@@ -50,7 +51,16 @@
       </div>
     </div>
 
-    <span style="margin-top: 30px" *ngIf="selectedElement !=''">Selected Element: {{selectedElement}}</span>
+    <div class="selectedElement" style="position: absolute; bottom: 100px ; display:flex;width: 600px;justify-content: center;align-items: center" >
+      <span *ngIf="selectedElement !=''">Selected Element: {{selectedElement}}
+        <span *ngIf="selectedElement=='pipe'">,<span style="padding: 0 5px"*ngIf="pipeType=='red'"> hot</span><span style="padding: 0 5px"*ngIf="pipeType=='blue'"> cold</span>
+          <button (click)="switchPipeType(pipeType)" >switch type</button>
+        </span>
+      </span>
+
+      <input style="width: 200px; border:1px solid grey; padding: 5px" *ngIf="selectedElement =='pipe'" [(ngModel)]="pipeLength" placeholder="pipe length. default:100" pattern="[0-9]{1-3}" type="number" min="0" max="100">
+    </div>
+
   </div>
   <app-footer></app-footer>
 </div>
