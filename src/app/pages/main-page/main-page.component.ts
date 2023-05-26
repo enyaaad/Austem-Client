@@ -2,6 +2,7 @@
 import {Component, OnInit} from '@angular/core';
 import axios from "axios";
 import {CookieService} from "ngx-cookie-service";
+import {AuthService} from "../../services/auth-service.service";
 
 @Component({
   selector: 'app-main-page',
@@ -12,37 +13,22 @@ import {CookieService} from "ngx-cookie-service";
 export class MainPageComponent{
   login:string ='';
   password: string ='';
-  isAuth:boolean = false;
-  isError:boolean = false;
+  isError: boolean = false;
+  isAuth: boolean  = false;
 
-  constructor(private cookieService: CookieService) {
-  }
-  auth():void{
-    let req = btoa(this.login+":"+this.password);
-
-    if(req != "YXNkOjEyMw=="){
-      this.isError = true;
-    }else{
-      this.isAuth = true;
-      this.cookieService.set('token',req)
-    }
-
+  constructor(private authService: AuthService, private cookieService: CookieService) {
+    this.isAuth = this.cookieService.check('token');
   }
 
-  comm(){
-    /*let response = axios.post('http://localhost:8080/example',{},{
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization' : 'Basic ' + req,
-        'Access-Control-Allow-Methods' : 'POST, OPTIONS, GET, DELETE, PUT',
-        'Access-Control-Allow-Origin': '*'
+  async auth(){
+      if(await this.authService.auth(this.login, this.password)){
+        this.isAuth = true
+      }else{
+        this.isError = true;
       }
-    }).then((res) =>{
-      console.log(res);
-      this.isAuth = true;
-      this.cookieService.set('token',req)
-    }).catch((err) =>{
-      this.isError = true;
-    })*/
   }
+
+
+
+
 }
