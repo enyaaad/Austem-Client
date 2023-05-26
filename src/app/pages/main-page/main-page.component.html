@@ -12,11 +12,9 @@
       </mat-form-field>
     </form>
     <app-button class="loginButton" (click)="auth()" ></app-button>
-
     <div class="errorMsg" *ngIf="isError" style="margin-top:40px">Login or password was incorrect</div>
-
   </div>
-  <div class="authMsg" *ngIf="isAuth">
+  <div class="authMsg" *ngIf="isAuth"  >
     You've logged successfully
   </div>
     <app-footer style="transition: 0.3s ease" *ngIf="isAuth"></app-footer>
