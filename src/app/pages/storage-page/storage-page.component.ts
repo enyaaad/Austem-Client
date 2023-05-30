@@ -12,7 +12,7 @@ import {Router} from "@angular/router";
 export class StoragePageComponent {
   data: Product[] = [...mockup];
   selectedItems: Set<number> = new Set();
-  productName:string='';
+  productName:string='zxc';
   productAmount?:number;
   productCost?:number;
   productNameforEdit:string='';

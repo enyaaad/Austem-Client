@@ -15,6 +15,10 @@
           <button (click)="deleteProject(i)" >
             delete Project
           </button>
+
+          <button routerLink="/calculate" (click)="calc.getProject(this.project)" >
+            calculate Project
+          </button>
         </div>
       </div>
     </div>
@@ -23,8 +27,8 @@
         There is no saved projects
       </div>
     </div>
-
+<!--    формула подсчета: количество труб определенного диаметра * цену пока не отсчитает все трубы, далее
+ кол-во радиаторов * 3000-7000 + бойлер * 25000-30000 -->
   </div>
-<!--  сделать кнопки удалить отдельный проект и сделать кнопку удаления всех проектов-->
 </div>
 <app-footer></app-footer>

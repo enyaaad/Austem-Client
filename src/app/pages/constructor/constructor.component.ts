@@ -70,7 +70,7 @@ export class ConstructorComponent implements AfterViewInit {
     if (this.cookieService.get('projectName'))
       this.projectName = this.cookieService.get('projectName')
     else {
-      this.projectName = 'New'
+      this.projectName = 'New';
       this.elements = [];
       localStorage.setItem('elements', JSON.stringify(this.elements))
     }
