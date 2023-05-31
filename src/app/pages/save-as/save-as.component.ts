@@ -1,7 +1,8 @@
-import {Component, OnInit, ViewChild, AfterViewInit, Input} from '@angular/core';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {Project} from "../../models/project";
 import {CookieService} from "ngx-cookie-service";
 import {Router} from "@angular/router";
+import {CalculatorService} from "../../services/calculator.service";
 
 @Component({
   selector: 'app-save-as',
@@ -12,7 +13,6 @@ export class SaveASComponent implements AfterViewInit, OnInit{
   data:Project[] = [];
   items = { ...localStorage };
 
-
   ngOnInit() {
     this.filterLocalStorage();
   }
@@ -20,7 +20,8 @@ export class SaveASComponent implements AfterViewInit, OnInit{
   ngAfterViewInit(): void {
   }
 
-  constructor(private cookieService: CookieService, public router: Router) {
+  constructor(private cookieService: CookieService, public router: Router, public calculateService : CalculatorService) {
+    this.calculateService = calculateService;
     if(!cookieService.check('token'))
       this.router.navigate(['mainpage']);
   }
@@ -51,4 +52,6 @@ export class SaveASComponent implements AfterViewInit, OnInit{
   }
     this.router.navigate(['constructor']);
   }
+
+
 }

@@ -17,6 +17,7 @@ import {RouterModule, Routes} from "@angular/router";
 import { CountfloorsComponent } from './pages/countfloors/countfloors.component';
 import {FormsModule} from "@angular/forms";
 import {CookieService} from "ngx-cookie-service";
+import { CalculatePageComponent } from './pages/calculate-page/calculate-page.component';
 
 const appRoutes: Routes = [
   {path: 'constructor', component: ConstructorComponent},
@@ -24,6 +25,7 @@ const appRoutes: Routes = [
   {path: 'storagepage', component: StoragePageComponent},
   {path: 'countfloors', component: CountfloorsComponent},
   {path: 'mainpage', component: MainPageComponent},
+  {path: 'calculate', component: CalculatePageComponent},
   {path: '**', component: MainPageComponent}
 ];
 
@@ -37,7 +39,8 @@ const appRoutes: Routes = [
     ConstructorComponent,
     SaveASComponent,
     StoragePageComponent,
-    CountfloorsComponent
+    CountfloorsComponent,
+    CalculatePageComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
