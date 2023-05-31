@@ -12,7 +12,6 @@ import {CalculatorService} from "../../services/calculator.service";
 export class SaveASComponent implements AfterViewInit, OnInit{
   data:Project[] = [];
   items = { ...localStorage };
-  calc = new CalculatorService;
 
   ngOnInit() {
     this.filterLocalStorage();

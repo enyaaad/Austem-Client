@@ -1,5 +1,7 @@
-import {Component, Input} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {Project} from "../../models/project";
+import {pipe} from "../../models/pipe";
+import {CalculatorService} from "../../services/calculator.service";
 
 @Component({
   selector: 'app-calculate-page',
@@ -7,19 +9,50 @@ import {Project} from "../../models/project";
   styleUrls: ['./calculate-page.component.sass']
 })
 
-export class CalculatePageComponent {
+export class CalculatePageComponent implements OnInit, AfterViewInit{
 
-  pipeDiameter = 20;
-  PipeTypes = new Map<number, number>([
-    [20, 42],
-    [25, 69],
-    [32, 111],
-    [40, 176],
-    [50, 274],
-    [63, 427],
-  ]);
+  @ViewChild('select') select!: ElementRef<HTMLSelectElement>;
 
-  countItems(){
+  selectedPipe: pipe = {diameter:0,price:0};
+
+  pipesCount: number |undefined ;
+  radiatorCount:number |undefined;
+  boilerCount:number | undefined;
+
+  calculated: number = 0;
+
+  PipeTypes:pipe[] = [
+    {diameter: 20, price: 42},
+    {diameter: 25, price: 69},
+    {diameter: 32, price: 111},
+    {diameter: 40, price: 176},
+    {diameter: 50, price: 274},
+    {diameter: 63, price: 427}
+  ]
+
+  constructor(public calculator: CalculatorService) {
+  }
+
+  ngOnInit() {
+    this.pipesCount = this.calculator.pipes;
+    this.boilerCount = this.calculator.boilers;
+    this.radiatorCount = this.calculator.radiators;
+  }
+  ngAfterViewInit() {
+
+  }
+
+  countPipes(){
+
+  }
+  calculatePipes(){
+
+  }
+  calculate() {
+    let pipeCost;
+    let boilerCost;
+    let radiatorCost;
+
 
   }
 }
