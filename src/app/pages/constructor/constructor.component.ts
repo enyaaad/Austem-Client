@@ -2,6 +2,7 @@ import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {CanvasElement} from "../../models/Element";
 import {CookieService} from "ngx-cookie-service";
 import {Router} from "@angular/router";
+import {CalculatorService} from "../../services/calculator.service";
 
 interface Element {
   type: 'square' | 'line' | 'rectangle';
@@ -64,7 +65,7 @@ export class ConstructorComponent implements AfterViewInit {
     }
   }
 
-  constructor(private cookieService: CookieService, public router: Router) {
+  constructor(private cookieService: CookieService, public router: Router, public calc: CalculatorService) {
     if (!cookieService.check('token'))
       this.router.navigate(['mainpage']);
     if (this.cookieService.get('projectName'))
@@ -216,10 +217,6 @@ export class ConstructorComponent implements AfterViewInit {
     }
   }
 
-  public randomNumberBetween(min: number, max: number): number {
-    return Math.random() * (max - min) + min;
-  }
-
   public saveCanvas(): void {
     let currentCanvas = localStorage.getItem('elements');
     if (this.cookieService.check('projectName')) {
@@ -230,14 +227,13 @@ export class ConstructorComponent implements AfterViewInit {
             localStorage.setItem(this.cookieService.get('projectName'), currentCanvas);
         }else{
           if (currentCanvas)
-            localStorage.setItem(this.cookieService.get('projectName'),currentCanvas)
+            localStorage.setItem(this.cookieService.get('projectName'),currentCanvas);
         }
       }
-
     } else {
       if (localStorage.getItem('elements') != null) {
         if (localStorage.getItem('elements')!.length !== 2) {
-          let saveName: string = Math.floor(this.randomNumberBetween(1, 10000)).toString()
+          let saveName: string = Math.floor(this.calc.randomNumberBetween(1, 10000)).toString()
           this.savedCanvases.push(saveName);
           if (currentCanvas)
             localStorage.setItem(saveName, currentCanvas)
@@ -352,7 +348,6 @@ export class ConstructorComponent implements AfterViewInit {
     const ctx = canvas.getContext('2d');
     if (ctx) {
       if (this.lastDraggedElement || this.lastDraggedElement == 0) {
-        console.log(this.lastDraggedElement)
         this.elements = this.elements.filter((value, index) => {
           return index !== this.lastDraggedElement
         })
@@ -368,7 +363,7 @@ export class ConstructorComponent implements AfterViewInit {
   protected newProject():void{
     if (localStorage.getItem('elements') != null) {
       if (localStorage.getItem('elements')!.length !== 2) {
-        let saveName: string = Math.floor(this.randomNumberBetween(1, 10000)).toString()
+        let saveName: string = Math.floor(this.calc.randomNumberBetween(1, 10000)).toString()
         this.projectName = saveName
         this.cookieService.set('projectName',saveName)
       }

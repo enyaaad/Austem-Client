@@ -1,23 +1,59 @@
 <div class="saveAsPage">
   <div class="content">
-    <h1>
-      in your project:
-      pipes:{{pipesCount}}
-      radiators:{{radiatorCount}}
-      boilers:{{boilerCount}}
-    </h1>
-    <div class="aza">
-      <select id="select" [(ngModel)]="selectedPipe">
-        <option *ngFor="let value of PipeTypes" >{{value.diameter}}</option>
-      </select>
 
-      <span>choose pipes diameter, default:20</span>
+    <div class="steps" >
+      <div class="steps-one shown step" #stepsOne>
+        <div class="step-one-header">
+          <h3>STEP ONE</h3>
+          <span>
+            У вас в проекте: {{pipesCount}} труб.
+          </span>
+          <span>Выберите количество труб и их диаметр, после чего нажмите кнопку подтверждения. Если не выберите, диаметр будет равен 20</span>
+        </div>
+        <div class="step-one-body">
+          <select id="select" [(ngModel)]="selectedPipe">
+            <option *ngFor="let value of PipeTypes" >{{value.diameter}}</option>
+          </select>
+          <input type="number" [min]="0" [max]="pipesCount" [(ngModel)]="pipesToCount" style="border: 1px solid black;margin: 0 5px;padding: 10px">
+          <button (click)="countPipes(pipesToCount)">Confirm</button>
+          <button class="continue" (click)="nextStep()" >
+            continue
+          </button>
+        </div>
+        calculated: {{calculated}}
+      </div>
+      <div class="steps-two hidden step" #stepsTwo >
+        <div class="step-two-header ">
+          <h1>step two</h1>
+        </div>
+        <div class="step-two-body">
+          У вас в проекте: {{radiatorCount}} радиатор(ов/а).
+          <button (click)="countRadiators()">Count Radiators</button>
+          <button class="continue" (click)="nextStep()" >
+            continue
+          </button>
+        </div>
+        calculated: {{calculated}}
 
-      <input type="number" [max]="pipesCount" placeholder="count of pipes of desired diameter" style="border: 1px solid black;margin: 0 5px;padding: 10px">
-      <button (click)="countPipes()" >dasdasdasd</button>
+      </div>
+      <div class="steps-three hidden step" #stepsThree>
+        <div class="step-three-header ">
+          <h1>step three</h1>
+        </div>
+        <div class="step-two-body">
+          У вас в проекте: {{boilerCount}} бойлер(ов/а).
+          <button (click)="countBoilers()">Count Boilers</button>
+          <button class="continue" (click)="nextStep()" >
+            continue
+          </button>
+        </div>
+        calculated: {{calculated}}
+
+      </div>
+
+
     </div>
 
-    calculated: {{calculated}}
     <!--    формула подсчета: количество труб определенного диаметра * цену пока не отсчитает все трубы, далее
      кол-во радиаторов * 3000-7000 + бойлер * 25000-30000 -->
   </div>

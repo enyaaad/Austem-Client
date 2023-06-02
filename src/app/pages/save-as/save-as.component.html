@@ -5,7 +5,9 @@
         <div class="cardHeader">
           <span> Project: <span class="projName">{{project.name}}</span></span>
           1F
-          <p>Project Cost</p>
+          <div class="" *ngIf="project.cost">
+            <p >{{project.cost}}</p> RUB
+          </div>
         </div>
         <div class="cardFooter">
           <button (click)="selectProject(i)">
@@ -16,7 +18,7 @@
             delete Project
           </button>
 
-          <button routerLink="/calculate" (click)="calculateService.getProject(this.project.elements)" >
+          <button routerLink="/calculate" (click)="calculateService.getProject(this.project)" >
             calculate Project
           </button>
         </div>
