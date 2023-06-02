@@ -6,7 +6,7 @@ import {CanvasElement} from "../models/Element";
   providedIn: 'root'
 })
 export class CalculatorService implements OnInit{
-  data:Project = {name:"",elements:[]};
+  data:Project = {name:"",cost:0};
   pipes: number = 0;
   boilers: number = 0;
   radiators: number = 0;
@@ -15,13 +15,21 @@ export class CalculatorService implements OnInit{
   ngOnInit() {
 
   }
+  public randomNumberBetween(min: number, max: number): number {
+    return Math.random() * (max - min) + min;
+  }
+  pushPrice(calculated:number){
+    this.data.cost = calculated;
+    console.log(this.data)
+  }
 
   async getProject(project: any): Promise<void>{
+    this.data =  project;
     this.pipes = 0;
     this.boilers = 0;
     this.radiators = 0;
 
-    let arr = [...project];
+    let arr = [...project.elements];
     await arr[0].forEach((el:CanvasElement)=>{
       switch (el.type){
         case "line":
