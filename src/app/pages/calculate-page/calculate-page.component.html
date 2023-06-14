@@ -6,9 +6,9 @@
         <div class="step-one-header">
           <h3>STEP ONE</h3>
           <span>
-            У вас в проекте: {{pipesCount}} труб.
+            You have {{pipesCount}} pipe(s) in your project
           </span>
-          <span>Выберите количество труб и их диаметр, после чего нажмите кнопку подтверждения. Если не выберите, диаметр будет равен 20</span>
+          <span>Select the number of pipes and their diameter, then click the confirmation button. If not selected, the diameter will be 20</span>
         </div>
         <div class="step-one-body">
           <select id="select" [(ngModel)]="selectedPipe">
@@ -17,37 +17,41 @@
           <input type="number" [min]="0" [max]="pipesCount" [(ngModel)]="pipesToCount" style="border: 1px solid black;margin: 0 5px;padding: 10px">
           <button (click)="countPipes(pipesToCount)">Confirm</button>
           <button class="continue" (click)="nextStep()" >
-            continue
+            Сontinue
           </button>
+          <span>calculated amount: {{calculated}}</span>
+
         </div>
-        calculated: {{calculated}}
       </div>
       <div class="steps-two hidden step" #stepsTwo >
         <div class="step-two-header ">
-          <h1>step two</h1>
+          <h1>STEP TWO</h1>
         </div>
         <div class="step-two-body">
-          У вас в проекте: {{radiatorCount}} радиатор(ов/а).
-          <button (click)="countRadiators()">Count Radiators</button>
+          You have {{radiatorCount}} radiator(s) in your project
+          <button (click)="countRadiators()">Confirm</button>
           <button class="continue" (click)="nextStep()" >
-            continue
+            Continue
           </button>
+          <span>calculated amount: {{calculated}}</span>
+
         </div>
-        calculated: {{calculated}}
 
       </div>
       <div class="steps-three hidden step" #stepsThree>
         <div class="step-three-header ">
-          <h1>step three</h1>
+          <h1>STEP THREE</h1>
         </div>
         <div class="step-two-body">
-          У вас в проекте: {{boilerCount}} бойлер(ов/а).
+          You have {{boilerCount}} boiler(s) in your project
+
           <button (click)="countBoilers()">Count Boilers</button>
           <button class="continue" (click)="nextStep()" >
             continue
           </button>
+          <span>calculated amount: {{calculated}}</span>
+
         </div>
-        calculated: {{calculated}}
 
       </div>
 

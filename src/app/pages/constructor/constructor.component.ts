@@ -245,7 +245,7 @@ export class ConstructorComponent implements AfterViewInit {
   private switchDrawElements(ctx: CanvasRenderingContext2D, type: string, x: number, y: number) {
     let pipeLen = '100';
     if(this.pipeLength != ''){
-      if(this.pipeLength)
+      if(this.pipeLength && parseInt(this.pipeLength)<=100)
         pipeLen = this.pipeLength
     }
     switch (type) {

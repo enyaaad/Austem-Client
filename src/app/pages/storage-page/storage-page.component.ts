@@ -12,13 +12,14 @@ import {Router} from "@angular/router";
 export class StoragePageComponent {
   data: Product[] = [...mockup];
   selectedItems: Set<number> = new Set();
-  productName:string='zxc';
+  productName:string='';
   productAmount?:number;
   productCost?:number;
   productNameforEdit:string='';
   productAmountforEdit?:number;
   productCostforEdit?:number;
   isError:boolean = false;
+  isAddError:boolean = false;
 
   constructor(private cookieService: CookieService, public router: Router) {
     if(!cookieService.check('token'))
@@ -87,7 +88,6 @@ export class StoragePageComponent {
         this.productAmountforEdit = undefined;
         this.productCostforEdit = undefined;
       }
-
     }
     else if(this.selectedItems.size >1 ){
       document.querySelectorAll('.editInput').forEach(input=>{
