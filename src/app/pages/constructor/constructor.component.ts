@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
-import {CanvasElement} from "../../models/Element";
 import {CookieService} from "ngx-cookie-service";
 import {Router} from "@angular/router";
 import {CalculatorService} from "../../services/calculator.service";
@@ -225,9 +224,9 @@ export class ConstructorComponent implements AfterViewInit {
         if (itemsKey.includes(this.cookieService.get('projectName'))) {
           if (currentCanvas)
             localStorage.setItem(this.cookieService.get('projectName'), currentCanvas);
-        }else{
+        } else {
           if (currentCanvas)
-            localStorage.setItem(this.cookieService.get('projectName'),currentCanvas);
+            localStorage.setItem(this.cookieService.get('projectName'), currentCanvas);
         }
       }
     } else {
@@ -244,8 +243,8 @@ export class ConstructorComponent implements AfterViewInit {
 
   private switchDrawElements(ctx: CanvasRenderingContext2D, type: string, x: number, y: number) {
     let pipeLen = '100';
-    if(this.pipeLength != ''){
-      if(this.pipeLength && parseInt(this.pipeLength)<=100)
+    if (this.pipeLength != '') {
+      if (this.pipeLength && parseInt(this.pipeLength) <= 100)
         pipeLen = this.pipeLength
     }
     switch (type) {
@@ -326,13 +325,10 @@ export class ConstructorComponent implements AfterViewInit {
               break;
             case "line":
               ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-              if (this.elements[this.lastDraggedElement].width === 100) {
-                this.elements[this.lastDraggedElement].width = 10;
-                this.elements[this.lastDraggedElement].height = 100;
-              } else {
-                this.elements[this.lastDraggedElement].width = 100
-                this.elements[this.lastDraggedElement].height = 10;
-              }
+              let tempw = this.elements[this.lastDraggedElement].width;
+              let temph = this.elements[this.lastDraggedElement].height;
+              this.elements[this.lastDraggedElement].width = temph;
+              this.elements[this.lastDraggedElement].height = tempw;
               this.redrawCanvas();
               localStorage.setItem('elements', JSON.stringify(this.elements))
               break;
@@ -360,12 +356,12 @@ export class ConstructorComponent implements AfterViewInit {
     this.drawElements();
   }
 
-  protected newProject():void{
+  protected newProject(): void {
     if (localStorage.getItem('elements') != null) {
       if (localStorage.getItem('elements')!.length !== 2) {
         let saveName: string = Math.floor(this.calc.randomNumberBetween(1, 10000)).toString()
         this.projectName = saveName
-        this.cookieService.set('projectName',saveName)
+        this.cookieService.set('projectName', saveName)
       }
     }
     this.clearCanvas()
